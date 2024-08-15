@@ -1,2 +1,2 @@
-# ppa
+# PPA
 Productivity Task Manager
