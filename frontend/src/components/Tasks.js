@@ -19,6 +19,7 @@ const Tasks = () => {
             console.error('Error fetching tasks:', error);
         }
     };
+    
     console.log(tasks, "Tasks")
     return (
         <div className="py-5">
