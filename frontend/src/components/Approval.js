@@ -8,7 +8,7 @@ function Approval({ match }) {
 
     useEffect(() => {
         const taskId = match.params.id;
-        axios.get(`/api/tasks/${taskId}`).then(res => {
+        axios.get(`/api/tasks/${taskId}/`).then(res => {
             setTask(res.data);
         });
     }, [match.params.id]);

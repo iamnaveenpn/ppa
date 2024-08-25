@@ -1,4 +1,4 @@
-// components/Profile.js
+// src/components/Profile.js
 import React, { useEffect, useState } from "react";
 import api from "../api/api"; // Import the api instance
 import { Form, Button, Container } from "react-bootstrap";

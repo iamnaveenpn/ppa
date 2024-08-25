@@ -6,19 +6,20 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from .models import Profile
 from .serializers import UserSerializer, ProfileSerializer, RegisterSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    # Remove or change permission_classes to allow any authenticated user
+    permission_classes = [AllowAny]  # Allow any authenticated user
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]  # Allow any user to perform actions
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -51,8 +52,9 @@ class RegisterView(APIView):
                 })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = User.objects.filter(is_staff=False)  # Assuming non-staff users are employees
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 

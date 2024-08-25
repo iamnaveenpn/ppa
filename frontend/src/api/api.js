@@ -1,5 +1,4 @@
 // src/api/api.js
-
 import axios from 'axios';
 
 const api = axios.create({
@@ -7,13 +6,18 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');  // Retrieve token from localStorage
+    const token = localStorage.getItem('access_token');
+    console.log("Retrieved token from localStorage:", token);  // Debug log
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`;  // Set the Authorization header
+        console.log("Token is present:", token);  // Debug log
+        config.headers.Authorization = `Bearer ${token}`;
+    } else {
+        console.log("No token found");  // Debug log
     }
     return config;
 }, (error) => {
     return Promise.reject(error);
 });
+
 
 export default api;

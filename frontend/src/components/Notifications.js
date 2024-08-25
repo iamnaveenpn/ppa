@@ -8,7 +8,7 @@ const Notifications = () => {
 
     useEffect(() => {
         const fetchNotifications = async () => {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('access_token');
             const response = await api.get('notifications/', {
                 headers: {
                     Authorization: `Token ${token}`,
