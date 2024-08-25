@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticated
 from .models import Profile
 from .serializers import UserSerializer, ProfileSerializer, RegisterSerializer
 
@@ -14,12 +14,12 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     # Remove or change permission_classes to allow any authenticated user
-    permission_classes = [AllowAny]  # Allow any authenticated user
+    permission_classes = [IsAuthenticated]  # Allow any authenticated user
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [AllowAny]  # Allow any user to perform actions
+    permission_classes = [IsAuthenticated]  # Allow any user to perform actions
 
     def get_queryset(self):
         # Optionally filter to return profiles for a specific user if needed
@@ -37,6 +37,7 @@ class LoginView(APIView):
         password = request.data.get('password')
 
         user = authenticate(username=username, password=password)
+        print(f'Authenticated user: {user}')
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -63,5 +64,5 @@ class RegisterView(APIView):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = User.objects.filter(is_staff=False)  # Assuming non-staff users are employees
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
