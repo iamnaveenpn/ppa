@@ -4,6 +4,7 @@
 The Personal Productivity App (PPA) is a comprehensive task management system designed to help users manage tasks, track productivity, and collaborate within workspaces. It includes features like task assignment, user notifications, user profiles, and advanced analytics.
 
 **#Features**
+
 User Authentication: Login, Register, and Logout functionalities.
 
 Task Management: Add, update, assign, and delete tasks. View completed tasks.
