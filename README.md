@@ -19,6 +19,9 @@ Analytics: Track task completion rates, productivity trends, and correlations be
 
 **#Technologies Used**
 Frontend: React.js, React-Bootstrap
+
 Backend: Django, Django REST Framework
+
 Database: PostgreSQL
-API: RESTful API with JWT authentication
+
+API: RESTful API
