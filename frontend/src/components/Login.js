@@ -1,4 +1,4 @@
-// components/Login.js
+// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
@@ -13,16 +13,10 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('login/', {
-                username,
-                password,
-            });
-            // Store tokens in localStorage
+            const response = await api.post('login/', { username, password });
             localStorage.setItem('access_token', response.data.access);
-            localStorage.setItem('refresh_token', response.data.refresh);
-
-            // Redirect to dashboard after successful login
-            navigate('/dashboard');
+            navigate('/dashboard', { replace: true }); // Use replace to avoid adding to history stack
+            window.location.reload(); // Force a reload to update Header state
         } catch (error) {
             setError('Login failed. Please check your username and password.');
             console.error('Login failed', error);
@@ -32,33 +26,30 @@ const Login = () => {
     return (
         <div className="py-5">
             <Container>
-            <Form onSubmit={handleLogin} className='d-flex gap-3 flex-wrap align-items-end'>
-            {error && <Alert variant="danger">{error}</Alert>}
-
-            <Form.Group controlId="formUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </Form.Group>
-
-            <Form.Group controlId="formPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-                Login
-            </Button>
-        </Form>
+                <Form onSubmit={handleLogin} className='d-flex gap-3 flex-wrap align-items-end'>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    <Form.Group controlId="formUsername">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Login
+                    </Button>
+                </Form>
             </Container>
         </div>
     );

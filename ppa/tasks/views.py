@@ -11,6 +11,12 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        status = self.request.query_params.get('status', None)
+        if status:
+            return Task.objects.filter(status=status)
+        return Task.objects.all()
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

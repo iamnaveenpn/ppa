@@ -21,6 +21,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [AllowAny]  # Allow any user to perform actions
 
+    def get_queryset(self):
+        # Optionally filter to return profiles for a specific user if needed
+        # This is optional and can be adjusted based on your use case
+        if self.request.user.is_authenticated:
+            return Profile.objects.filter(user=self.request.user)
+        return Profile.objects.none()
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 

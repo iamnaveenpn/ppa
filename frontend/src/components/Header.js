@@ -1,12 +1,26 @@
 // src/components/Header.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        setIsLoggedIn(false);
+        navigate('/login');
+    };
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
@@ -25,8 +39,14 @@ const Header = () => {
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} to="/completed-tasks">Completed Tasks</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                        <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                        {isLoggedIn ? (
+                            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                        ) : (
+                            <>
+                                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                                <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                            </>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

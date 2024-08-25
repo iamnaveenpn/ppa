@@ -12,6 +12,7 @@ import Header from "./components/Header"; // Import the Header component
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Tasks from "./components/Tasks";
+import CompletedTasks from "./components/CompletedTasks";
 
 // Define the routes for the application
 const router = createBrowserRouter([
@@ -104,6 +105,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: "/completed-tasks",
+    element: (
+      <>
+        <Header />
+        <CompletedTasks />
       </>
     ),
   },

@@ -39,30 +39,31 @@ const TaskForm = () => {
     }
   }, [id]);
 
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
     const taskData = {
-      title,
-      description,
-      assignee,
-      due_date: dueDate,
-      status,
+        title,
+        description,
+        assigned_to: assignee,  // Ensure this matches your model field name
+        due_date: dueDate,
+        status,
     };
 
     if (id) {
-      // Update existing task
-      api
-        .put(`tasks/${id}/`, taskData)
-        .then(() => navigate("/dashboard"))
-        .catch((error) => console.error("Error updating task:", error));
+        // Update existing task
+        api
+            .put(`/tasks/${id}/`, taskData)
+            .then(() => navigate("/dashboard"))
+            .catch((error) => console.error("Error updating task:", error.response.data));
     } else {
-      // Create new task
-      api
-        .post("tasks/", taskData)
-        .then(() => navigate("/dashboard"))
-        .catch((error) => console.error("Error creating task:", error));
+        // Create new task
+        api
+            .post("/tasks/", taskData)
+            .then(() => navigate("/dashboard"))
+            .catch((error) => console.error("Error creating task:", error.response.data));
     }
-  };
+};
+
 
   return (
     <div className="py-5">
