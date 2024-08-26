@@ -44,7 +44,7 @@ const TaskForm = () => {
     const taskData = {
         title,
         description,
-        assigned_to: assignee,  // Ensure this matches your model field name
+        assigned_tod_to: assignee,  // Ensure this matches your model field name
         due_date: dueDate,
         status,
     };
